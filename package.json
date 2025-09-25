@@ -4,7 +4,7 @@
   "description": "Bem-vindo(a) à documentação do meu curso de desenvolvimento Backend com Node.js! Este repositório reflete uma jornada completa, que vai desde os fundamentos mais básicos da tecnologia até a construção de aplicações complexas e escaláveis, utilizando arquiteturas avançadas e frameworks modernos.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "tsx watch src/server.ts"
   },
   "repository": {
     "type": "git",
@@ -18,6 +18,11 @@
   },
   "homepage": "https://github.com/alissonpef/Node.js-Rocketseat#readme",
   "devDependencies": {
+    "@types/node": "^24.5.2",
+    "tsx": "^4.20.5",
     "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "fastify": "^5.6.1"
   }
 }
