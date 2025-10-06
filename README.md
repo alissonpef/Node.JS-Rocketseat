@@ -72,3 +72,6 @@ Ao final deste curso, você terá construído e domínio a manutenção dos segu
 3.  **Desafio Prático - Gerenciador de Tarefas:** Um desafio opcional para desenvolver uma API completa com autenticação, autorização (`Admin` e `Membros`) e gerenciamento de tarefas.
 4.  **Projeto Bônus: API do APP Refund 2.0:** Projeto extra de alta complexidade com foco em manipulação de arquivos (upload, validação) e regras de negócio robustas.
 
+
+
+
