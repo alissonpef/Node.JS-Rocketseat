@@ -1,4 +1,5 @@
 import { routes } from "../routes.js";
+import { extractQueryParams } from "../utils/extract-query-params.js";
 
 export function routeHandler(req, res) {
   const route = routes.find((route) => {
@@ -7,10 +8,11 @@ export function routeHandler(req, res) {
 
   if (route) {
     const routeParams = req.url.match(route.path);
-    const { ...params } = routeParams.groups
-    
-    req.params = params
-  
+    const { query, ...params } = routeParams.groups;
+
+    req.params = params;
+    // Verifico se existe uma query, se existir eu chamo a função extract, se não eu devolvo uma lista vazia
+    req.query = query ? extractQueryParams(query) : {};
 
     return route.controller(req, res);
   }
