@@ -1,25 +1,22 @@
-import http from "node:http"
+import http from "node:http";
+import { jsonBodyHandler } from "./middlewares/jsonBodyHandler.js";
 
 const server = http.createServer(async (req, res) => {
-    const { method, url } = req // const method = req.method;
+  const { method, url } = req; // const method = req.method;
 
-    if (method === "GET" && url === "/products") {
-        return res.end("Lista de Produtos!")
-    }
+  await jsonBodyHandler(req, res);
 
-    if (method === "POST" && url === "/products") {
-        const buffers = []
+  if (method === "GET" && url === "/products") {
+    return res.end("Lista de Produtos!");
+  }
 
-        for await (const chunk of req) {
-            buffers.push(chunk)
-        }
-        console.log(buffers)
-        console.log(Buffer.concat(buffers).toString())
+  if (method === "POST" && url === "/products") {
+    // Ele vai dar erro se colocar req.body, pois o req retorna strings e nṹmeros, porém, ele printa apenas strings
+    // Caso queira printar um tipo númerico especifico, daria para fazer req.body.price.toString()
+    return res.writeHead(201).end(JSON.stringify(req.body));
+  }
 
-        return res.writeHead(201).end("Produto cadastrado!")
-    }
+  return res.writeHead(404).end("Rota não encontrada!");
+});
 
-    return res.writeHead(404).end("Rota não encontrada!") 
-})
-
-server.listen(8080)
+server.listen(8080);
