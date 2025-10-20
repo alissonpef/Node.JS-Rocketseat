@@ -1,28 +1,32 @@
-import fs from "node:fs/promises"
+import fs from "node:fs/promises";
 
-const DATABASE_PATH = new URL("db.json", import.meta.url)
+const DATABASE_PATH = new URL("db.json", import.meta.url);
 
 export class Database {
-  database = {};
+  #database = {}; // Deixa o banco de dados Privado, ou seja, funciona apenas dentro da classe
 
   constructor() {
-    this.persist();
+    fs.readFile(DATABASE_PATH, "utf8")
+      .then((data) => {
+        this.#database = JSON.parse(data);
+      })
+      .catch(() => this.#persist());
   }
 
-  persist() {
-    fs.writeFile(DATABASE_PATH, JSON.stringify(this.database))
+  #persist() {
+    fs.writeFile(DATABASE_PATH, JSON.stringify(this.#database));
   }
 
   insert(table, data) {
     if (Array.isArray(this.database[table])) {
-      this.database[table].push(data);
+      this.#database[table].push(data);
     } else {
-      this.database[table] = [data];
+      this.#database[table] = [data];
     }
-    this.persist()
+    this.#persist();
   }
 
   select(table) {
-    return this.database[table];
+    return this.#database[table] ?? [];
   }
 }
