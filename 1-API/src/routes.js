@@ -1,11 +1,12 @@
-import { parseRoutePath } from "./utils/parseRoutePath.js"
+import { parseRoutePath } from "./utils/parseRoutePath.js";
 
 export const routes = [
   {
     method: "GET",
     path: "/products",
     controller: (req, res) => {
-      return res.end("Lista de Produtos!");
+      console.log(req.query);
+      return res.end(JSON.stringify(req.query));
     },
   },
   {
@@ -19,10 +20,12 @@ export const routes = [
     method: "DELETE",
     path: "/products/:id",
     controller: (req, res) => {
-      return res.writeHead(201).end("Produto removido com ID: " + req.params.id);
+      return res
+        .writeHead(201)
+        .end("Produto removido com ID: " + req.params.id);
     },
   },
 ].map((route) => ({
   ...route, // Copia todas as propriedades do objeto 'route' original, basicamente um path: route.path
-  path: parseRoutePath(route.path)
-}))
+  path: parseRoutePath(route.path),
+}));
